@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusion vs Fission, Nuclear Energy Compared</title>
+<meta name="description" content="VCE Physics Unit 2 Option 2.2, How do fusion and fission compare as viable nuclear energy power sources?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ======= PROGRESS BAR ======= -->
+<div class="progress-track" id="progressTrack" hidden><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ======= HOME BUTTON ======= -->
+<button class="home-btn" id="homeBtn" hidden aria-label="Back to the start">
+  <span class="home-mark" aria-hidden="true">
+    <span class="home-nucleus"></span>
+  </span>
+  <span class="home-text">Fusion <span class="home-vs">vs</span> Fission</span>
+</button>
+
+<!-- ======= DECK ======= -->
+<main id="deck">
+
+<!-- ========================================================= SLIDE 0 : HERO -->
+<section class="slide hero active" data-title="Introduction">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="orbit orbit-1"></div><div class="orbit orbit-2"></div><div class="orbit orbit-3"></div>
+    <div class="nucleus-dot"></div>
+  </div>
+  <div class="hero-content">
+    <p class="kicker">VCE Physics · Unit 2 · Detailed Study, Option 2.2</p>
+    <h1>Fusion <span class="vs">vs</span> Fission</h1>
+    <p class="hero-sub">How do fusion and fission compare as viable nuclear energy power sources?</p>
+    <p class="hero-names">Edwin · Jehan · Tayyab · Leon</p>
+    <p class="hero-hint">Move through the slides with the buttons below (or your arrow keys), then experiment with our interactive reactor simulation at the end.</p>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 1 : WHY -->
+<section class="slide" data-title="Why this question matters">
+  <p class="kicker">Context</p>
+  <h2>Why this question matters</h2>
+  <div class="cols">
+    <div>
+      <p>Electricity demand is rising while the world tries to cut carbon emissions. Today, about 440 fission reactors supply roughly 9% of the world's electricity, the second-largest source of low-carbon power after hydro <span class="cite">(IAEA, 2024)</span>.</p>
+      <p>Fission splits heavy nuclei and is a mature, 70-year-old technology. Fusion joins light nuclei, the same process that powers the Sun, and it has never generated a single watt of grid electricity. But in December 2022 the National Ignition Facility achieved ignition for the first time: 2.05 MJ of laser energy in, 3.15 MJ of fusion energy out <span class="cite">(LLNL, 2022)</span>.</p>
+      <p>So which process is the more viable power source? To answer that we need the physics: where the energy comes from, what fuels each reaction needs, what each produces, and what can go wrong.</p>
+    </div>
+    <div class="panel stat-panel">
+      <div class="stat"><span class="stat-num">~440</span><span class="stat-label">operating fission reactors worldwide (IAEA, 2024)</span></div>
+      <div class="stat"><span class="stat-num">0</span><span class="stat-label">fusion power plants supplying the grid, anywhere</span></div>
+      <div class="stat"><span class="stat-num">1.54×</span><span class="stat-label">first net energy gain from fusion fuel, NIF, Dec 2022 (LLNL, 2022)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 2 : KEY TERMS -->
+<section class="slide" data-title="Key terms">
+  <p class="kicker">The physics toolkit</p>
+  <h2>Key terms &amp; definitions</h2>
+  <div class="def-grid">
+    <div class="def-card">
+      <h3>Nuclide notation</h3>
+      <p>A nucleus is written <span class="iso"><span class="an">A<br>Z</span>X</span> where A = mass number (protons + neutrons) and Z = atomic number (protons). e.g. <span class="iso"><span class="an">235<br>92</span>U</span> has 92 protons and 143 neutrons.</p>
+    </div>
+    <div class="def-card">
+      <h3>Isotopes</h3>
+      <p>Atoms of the same element (same Z) with different numbers of neutrons (different A). Deuterium <span class="iso"><span class="an">2<br>1</span>H</span> and tritium <span class="iso"><span class="an">3<br>1</span>H</span> are isotopes of hydrogen.</p>
+    </div>
+    <div class="def-card">
+      <h3>Strong nuclear force</h3>
+      <p>The short-range attractive force that binds nucleons together, overpowering the electrostatic (Coulomb) repulsion between protons, but only at separations of about 10<sup>−15</sup> m.</p>
+    </div>
+    <div class="def-card">
+      <h3>Binding energy</h3>
+      <p>The energy needed to pull a nucleus apart into separate nucleons. That is also the energy released when the nucleus forms. It is measured in mega-electronvolts (1 MeV = 1.602 × 10<sup>−13</sup> J).</p>
+    </div>
+    <div class="def-card accent">
+      <h3>Mass defect &amp; E = mc²</h3>
+      <p>A bound nucleus has less mass than its separate nucleons. The missing mass Δm becomes energy: <span class="eq">E = Δmc²</span> <span class="cite">(Einstein, 1905)</span>. Every joule of nuclear energy, fusion or fission, is paid for by mass.</p>
+    </div>
+    <div class="def-card">
+      <h3>Worked example: helium-4</h3>
+      <p>2p + 2n = 4.03298 u, but a real He-4 nucleus is only 4.00260 u. The missing Δm = 0.03038 u becomes E = 28.3 MeV of binding energy (1 u = 931.5 MeV/c²) <span class="cite">(CODATA, 2022)</span>.</p>
+    </div>
+  </div>
+  <p class="footnote">These terms are set out here in words, symbols and equations. We use them consistently on the slides that follow.</p>
+</section>
+
+<!-- ========================================================= SLIDE 3 : BINDING ENERGY CURVE -->
+<section class="slide" data-title="The binding energy curve">
+  <p class="kicker">The one graph that explains everything</p>
+  <h2>The binding energy curve</h2>
+  <div class="cols cols-chart">
+    <figure class="panel chart-panel">
+      <svg viewBox="0 0 760 400" class="chart" role="img" aria-label="Line graph of binding energy per nucleon versus mass number, peaking near iron-56">
+        <!-- gridlines -->
+        <g class="grid">
+          <line x1="60" y1="340" x2="700" y2="340"/><line x1="60" y1="272.6" x2="700" y2="272.6"/>
+          <line x1="60" y1="205.2" x2="700" y2="205.2"/><line x1="60" y1="137.8" x2="700" y2="137.8"/>
+          <line x1="60" y1="70.4" x2="700" y2="70.4"/>
+        </g>
+        <!-- axes labels -->
+        <g class="axis-text">
+          <text x="52" y="344" text-anchor="end">0</text><text x="52" y="276.6" text-anchor="end">2</text>
+          <text x="52" y="209.2" text-anchor="end">4</text><text x="52" y="141.8" text-anchor="end">6</text>
+          <text x="52" y="74.4" text-anchor="end">8</text>
+          <text x="60" y="368" text-anchor="middle">0</text><text x="193" y="368" text-anchor="middle">50</text>
+          <text x="327" y="368" text-anchor="middle">100</text><text x="460" y="368" text-anchor="middle">150</text>
+          <text x="593" y="368" text-anchor="middle">200</text><text x="700" y="368" text-anchor="middle">240</text>
+          <text x="380" y="392" text-anchor="middle" class="axis-title">Mass number A (nucleons)</text>
+          <text x="16" y="200" text-anchor="middle" transform="rotate(-90 16 200)" class="axis-title">Binding energy per nucleon (MeV)</text>
+        </g>
+        <!-- fusion / fission region washes -->
+        <rect x="60" y="30" width="120" height="310" class="wash wash-fusion"/>
+        <rect x="560" y="30" width="140" height="310" class="wash wash-fission"/>
+        <!-- curve -->
+        <polyline class="be-curve" points="62.7,340 65.3,302.6 68,244.6 70.7,101.7 76,160.4 78.7,151 84,122.3 92,81.2 97.3,87.9 102.7,71 113.3,69.4 124,61.6 134.7,55.2 145.3,53.9 166.7,51.9 209.3,43.8 225.3,43.8 284,46.1 321.3,49.2 380,53.6 422.7,55.9 486.7,62 550.7,68.7 617.3,75.4 686.7,84.2 694.7,84.9"/>
+        <!-- key point markers -->
+        <circle class="pt pt-fusion" cx="70.7" cy="101.7" r="5"><title>Helium-4: 7.07 MeV/nucleon</title></circle>
+        <circle class="pt pt-peak" cx="209.3" cy="43.8" r="5"><title>Iron-56: 8.79 MeV/nucleon, most stable</title></circle>
+        <circle class="pt pt-fission" cx="686.7" cy="84.2" r="5"><title>Uranium-235: 7.59 MeV/nucleon</title></circle>
+        <!-- annotations -->
+        <g class="anno">
+          <text x="122" y="52" class="anno-fusion">FUSION →</text>
+          <text x="122" y="66" class="anno-sub">light nuclei climb the curve</text>
+          <text x="628" y="52" class="anno-fission">← FISSION</text>
+          <text x="620" y="66" class="anno-sub">heavy nuclei climb back</text>
+          <text x="209" y="28" text-anchor="middle" class="anno-peak">Fe-56 peak (8.79 MeV), most stable nucleus</text>
+          <text x="86" y="105" class="anno-sub">He-4</text>
+          <text x="668" y="102" class="anno-sub">U-235</text>
+        </g>
+      </svg>
+      <figcaption>Binding energy per nucleon vs mass number. Data: IAEA Nuclear Data Services / AME2020 <span class="cite">(Wang et al., 2021)</span>.</figcaption>
+    </figure>
+    <div>
+      <p>Plot the binding energy per nucleon against mass number and one curve explains both reactions. Nuclei become more stable as you move up the curve, and any reaction that moves nucleons up the curve releases the difference in binding energy.</p>
+      <ul class="tick-list">
+        <li><strong class="c-fusion">Fusion</strong>: light nuclei (H, He) sit low on the steep left slope. Fusing them climbs sharply, releasing up to ~3.5 MeV per nucleon (D–T).</li>
+        <li><strong class="c-fission">Fission</strong>: very heavy nuclei (U, Pu) sit past the peak. Splitting them into mid-mass fragments climbs gently back, ~0.85 MeV per nucleon.</li>
+        <li>Iron-56 sits at the peak: it can release energy neither way.</li>
+      </ul>
+      <p class="key-idea">This single relationship is why fusion releases roughly 4× more energy per kilogram of fuel than fission, and why both count as "nuclear energy" despite being opposite processes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 4 : P-P CHAIN -->
+<section class="slide" data-title="Fusion in stars">
+  <p class="kicker">Fusion · Part 1</p>
+  <h2>Fusion in stars: the proton–proton chain</h2>
+  <div class="cols">
+    <div>
+      <p>Main-sequence stars like our Sun generate energy by fusing hydrogen into helium through the proton–proton (p–p) chain <span class="cite">(Bethe, 1939)</span>:</p>
+      <div class="eq-block">
+        <p><span class="iso"><span class="an">1<br>1</span>H</span> + <span class="iso"><span class="an">1<br>1</span>H</span> → <span class="iso"><span class="an">2<br>1</span>H</span> + e⁺ + ν <span class="eq-e">(0.42 MeV)</span></p>
+        <p><span class="iso"><span class="an">2<br>1</span>H</span> + <span class="iso"><span class="an">1<br>1</span>H</span> → <span class="iso"><span class="an">3<br>2</span>He</span> + γ <span class="eq-e">(5.49 MeV)</span></p>
+        <p><span class="iso"><span class="an">3<br>2</span>He</span> + <span class="iso"><span class="an">3<br>2</span>He</span> → <span class="iso"><span class="an">4<br>2</span>He</span> + 2<span class="iso"><span class="an">1<br>1</span>H</span> <span class="eq-e">(12.86 MeV)</span></p>
+        <p class="eq-net">Net: 4<span class="iso"><span class="an">1<br>1</span>H</span> → <span class="iso"><span class="an">4<br>2</span>He</span> + 2e⁺ + 2ν + 2γ &nbsp;·&nbsp; 26.7 MeV</p>
+      </div>
+      <p>0.7% of the reacting mass is converted to energy (E = Δmc²), the highest fraction of any reaction on these slides.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Reactants, products &amp; conditions</h3>
+        <ul class="tick-list">
+          <li><strong>Reactants:</strong> ordinary hydrogen, the most abundant element in the universe. The Sun converts ~4 × 10⁹ kg of mass to energy every second.</li>
+          <li><strong>Products:</strong> helium-4, positrons (which annihilate with electrons, adding energy), neutrinos and gamma rays.</li>
+          <li><strong>Conditions:</strong> ~15 million K and immense gravitational pressure. Even then, the first step relies on the weak interaction and on quantum tunnelling through the Coulomb barrier. On average, a given proton waits billions of years before it fuses.</li>
+        </ul>
+      </div>
+      <p class="key-idea">That slowness is why stars burn steadily for billions of years, and why the p–p chain is useless as a reactor design. Earth-based fusion needs a much faster reaction: deuterium–tritium.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 5 : D-T -->
+<section class="slide" data-title="D–T fusion">
+  <p class="kicker">Fusion · Part 2</p>
+  <h2>Fusion on Earth: the deuterium–tritium reaction</h2>
+  <div class="cols">
+    <div>
+      <div class="eq-block eq-hero">
+        <p><span class="iso"><span class="an">2<br>1</span>H</span> + <span class="iso"><span class="an">3<br>1</span>H</span> → <span class="iso"><span class="an">4<br>2</span>He</span> <span class="eq-e">(3.5 MeV)</span> + <span class="iso"><span class="an">1<br>0</span>n</span> <span class="eq-e">(14.1 MeV)</span></p>
+        <p class="eq-net">Energy released: 17.6 MeV · 0.38% of mass converted</p>
+      </div>
+      <p>D–T has the largest reaction probability (cross-section) at the lowest temperature of any fusion reaction, which is why every serious reactor project (ITER, JET, NIF) uses it <span class="cite">(ITER Organization, 2025)</span>.</p>
+      <p>By conservation of momentum the lighter product carries most of the kinetic energy: the neutron takes 14.1 MeV, 80% of the yield. Because it is uncharged, it escapes the magnetic field and is captured in the reactor's blanket, where its energy becomes heat.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 420 210" class="diagram" role="img" aria-label="Diagram of deuterium and tritium fusing into helium-4 plus a fast neutron">
+        <g class="d-fusion">
+          <circle cx="55" cy="70" r="22" class="ion-d"/><text x="55" y="75" class="dg-label">D</text>
+          <circle cx="55" cy="150" r="26" class="ion-t"/><text x="55" y="155" class="dg-label">T</text>
+          <path d="M90 70 Q130 70 155 100" class="dg-arrow"/><path d="M90 150 Q130 150 155 120" class="dg-arrow"/>
+          <circle cx="185" cy="110" r="16" class="flash"/>
+          <path d="M215 95 L275 55" class="dg-arrow"/><path d="M215 125 L275 165" class="dg-arrow"/>
+          <circle cx="305" cy="42" r="24" class="ion-he"/><text x="305" y="47" class="dg-label">He-4</text>
+          <text x="305" y="86" class="dg-sub">3.5 MeV</text>
+          <circle cx="305" cy="172" r="11" class="ion-n"/><text x="330" y="167" class="dg-sub-l">n, 14.1 MeV</text>
+          <text x="330" y="183" class="dg-sub-l">(80% of energy)</text>
+        </g>
+      </svg>
+      <div class="panel">
+        <h3>The Coulomb barrier problem</h3>
+        <p>Both nuclei are positive, so they repel until they are within ~10<sup>−15</sup> m, where the strong force takes over. Without a star's pressure, we compensate with temperature above 100–150 million K (~10× the Sun's core). At these temperatures matter is a plasma, confined by magnetic fields (tokamaks) or compressed by lasers (inertial confinement, NIF).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 6 : FUSION FUEL -->
+<section class="slide" data-title="Fusion fuel">
+  <p class="kicker">Fusion · Part 3</p>
+  <h2>Fusion fuel: availability and energy density</h2>
+  <div class="cols">
+    <div>
+      <ul class="tick-list">
+        <li><strong>Deuterium:</strong> 1 in ~6,420 hydrogen atoms in seawater <span class="cite">(IAEA, 2023)</span>. The oceans hold enough for millions of years of world energy use, effectively inexhaustible.</li>
+        <li><strong>Tritium:</strong> radioactive (half-life 12.3 y), so almost none exists naturally. The entire world inventory is only about 25 kg. It has to be bred from lithium inside the reactor blanket, using the fusion neutron itself:</li>
+      </ul>
+      <div class="eq-block">
+        <p><span class="iso"><span class="an">6<br>3</span>Li</span> + <span class="iso"><span class="an">1<br>0</span>n</span> → <span class="iso"><span class="an">4<br>2</span>He</span> + <span class="iso"><span class="an">3<br>1</span>H</span> <span class="eq-e">(+4.8 MeV)</span></p>
+      </div>
+      <p class="key-idea">1 kg of D–T fuel releases about as much energy as 10,000 tonnes of coal. The catch is that breeding tritium at full reactor scale is still unproven, which is a genuine weakness in fusion's fuel story (we come back to it on slide 12).</p>
+    </div>
+    <figure class="panel chart-panel">
+      <svg viewBox="0 0 760 330" class="chart" role="img" aria-label="Dot plot on a logarithmic scale comparing energy released per kilogram of fuel">
+        <g class="grid">
+          <line x1="90" y1="40" x2="90" y2="260"/><line x1="170" y1="40" x2="170" y2="260"/>
+          <line x1="250" y1="40" x2="250" y2="260"/><line x1="330" y1="40" x2="330" y2="260"/>
+          <line x1="410" y1="40" x2="410" y2="260"/><line x1="490" y1="40" x2="490" y2="260"/>
+          <line x1="570" y1="40" x2="570" y2="260"/><line x1="650" y1="40" x2="650" y2="260"/>
+        </g>
+        <g class="axis-text">
+          <text x="90" y="280" text-anchor="middle">10⁷</text><text x="250" y="280" text-anchor="middle">10⁹</text>
+          <text x="410" y="280" text-anchor="middle">10¹¹</text><text x="570" y="280" text-anchor="middle">10¹³</text>
+          <text x="650" y="280" text-anchor="middle">10¹⁴</text>
+          <text x="380" y="308" text-anchor="middle" class="axis-title">Energy per kg of fuel (joules, log scale)</text>
+        </g>
+        <!-- rows: y = 70, 115, 160, 205, 245 -->
+        <g class="dotrow" data-tip="Coal: 2.4×10⁷ J/kg (chemical combustion)">
+          <line x1="90" y1="70" x2="120" y2="70" class="stem stem-mut"/><circle cx="120" cy="70" r="8" class="dot dot-mut"/>
+          <text x="14" y="74" class="row-label">Coal</text><text x="136" y="74" class="row-val">2.4×10⁷ J/kg</text>
+        </g>
+        <g class="dotrow" data-tip="Natural gas: 5.5×10⁷ J/kg (chemical combustion)">
+          <line x1="90" y1="115" x2="149" y2="115" class="stem stem-mut"/><circle cx="149" cy="115" r="8" class="dot dot-mut"/>
+          <text x="14" y="119" class="row-label">Natural gas</text><text x="165" y="119" class="row-val">5.5×10⁷</text>
+        </g>
+        <g class="dotrow" data-tip="Natural uranium used in a typical light-water reactor: ~5×10¹¹ J/kg">
+          <line x1="90" y1="160" x2="466" y2="160" class="stem stem-fis"/><circle cx="466" cy="160" r="8" class="dot dot-fis"/>
+          <text x="14" y="164" class="row-label">Natural U (reactor)</text><text x="482" y="164" class="row-val">~5×10¹¹</text>
+        </g>
+        <g class="dotrow" data-tip="Pure U-235, complete fission: 8.2×10¹³ J/kg, about 3.4 million × coal">
+          <line x1="90" y1="205" x2="643" y2="205" class="stem stem-fis"/><circle cx="643" cy="205" r="8" class="dot dot-fis"/>
+          <text x="14" y="209" class="row-label">U-235 fission</text><text x="590" y="190" class="row-val">8.2×10¹³</text>
+        </g>
+        <g class="dotrow" data-tip="Deuterium–tritium fusion: 3.4×10¹⁴ J/kg, about 14 million × coal">
+          <line x1="90" y1="245" x2="693" y2="245" class="stem stem-fus"/><circle cx="693" cy="245" r="8" class="dot dot-fus"/>
+          <text x="14" y="249" class="row-label">D–T fusion</text><text x="620" y="232" class="row-val">3.4×10¹⁴</text>
+        </g>
+      </svg>
+      <figcaption>Energy released per kilogram of fuel (log scale, each gridline is 10× the last). Sources: World Nuclear Association (2024); CODATA (2022).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 7 : FISSION U-235 -->
+<section class="slide" data-title="Fission &amp; chain reactions">
+  <p class="kicker">Fission · Part 1</p>
+  <h2>Fission of U-235: the chain reaction</h2>
+  <div class="cols">
+    <div>
+      <p>Fission splits a heavy nucleus into two mid-mass fragments. A typical U-235 fission:</p>
+      <div class="eq-block eq-hero">
+        <p><span class="iso"><span class="an">1<br>0</span>n</span> + <span class="iso"><span class="an">235<br>92</span>U</span> → <span class="iso"><span class="an">236<br>92</span>U</span>* → <span class="iso"><span class="an">141<br>56</span>Ba</span> + <span class="iso"><span class="an">92<br>36</span>Kr</span> + 3<span class="iso"><span class="an">1<br>0</span>n</span></p>
+        <p class="eq-net">Energy released: ~200 MeV per fission · ~0.09% of mass converted</p>
+      </div>
+      <ul class="tick-list">
+        <li>Slow (thermal) neutrons (~0.025 eV) trigger U-235 fission far more readily than fast ones; the capture probability is hundreds of times higher. That is why reactors use a moderator (water or graphite) to slow down the fast ~2 MeV neutrons that fission produces.</li>
+        <li>Each fission frees 2–3 new neutrons → a chain reaction. If on average exactly one neutron causes another fission (k = 1) the reactor is critical and steady; k &gt; 1 grows exponentially. Control rods (boron/cadmium) absorb neutrons to hold k = 1.</li>
+        <li>Only 0.72% of natural uranium is U-235, so reactor fuel is enriched to 3–5% (above 90% is weapons-grade).</li>
+      </ul>
+    </div>
+    <div>
+      <svg viewBox="0 0 420 300" class="diagram" role="img" aria-label="Diagram of a fission chain reaction: one neutron splits U-235 releasing three neutrons which split further nuclei">
+        <circle cx="30" cy="150" r="7" class="ion-n"/><text x="30" y="130" class="dg-sub">slow n</text>
+        <path d="M42 150 L88 150" class="dg-arrow"/>
+        <circle cx="120" cy="150" r="26" class="ion-u"/><text x="120" y="155" class="dg-label">U-235</text>
+        <path d="M150 138 L200 70" class="dg-arrow"/><path d="M152 150 L205 150" class="dg-arrow"/><path d="M150 162 L200 230" class="dg-arrow"/>
+        <circle cx="212" cy="58" r="7" class="ion-n"/><circle cx="217" cy="150" r="7" class="ion-n"/><circle cx="212" cy="242" r="7" class="ion-n"/>
+        <text x="212" y="34" class="dg-sub">3 fast neutrons + fragments + ~200 MeV</text>
+        <path d="M224 58 L270 58" class="dg-arrow"/><path d="M229 150 L270 150" class="dg-arrow"/><path d="M224 242 L270 242" class="dg-arrow"/>
+        <circle cx="300" cy="58" r="24" class="ion-u"/><text x="300" y="63" class="dg-label">U-235</text>
+        <circle cx="300" cy="150" r="24" class="ion-u"/><text x="300" y="155" class="dg-label">U-235</text>
+        <circle cx="300" cy="242" r="24" class="ion-u"/><text x="300" y="247" class="dg-label">U-235</text>
+        <path d="M330 46 L368 30" class="dg-arrow"/><path d="M330 70 L368 86" class="dg-arrow"/>
+        <path d="M330 138 L368 122" class="dg-arrow"/><path d="M330 162 L368 178" class="dg-arrow"/>
+        <path d="M330 230 L368 214" class="dg-arrow"/><path d="M330 254 L368 270" class="dg-arrow"/>
+        <text x="352" y="156" class="dg-sub-l">…and so on</text>
+      </svg>
+      <p class="footnote">This split is only one of many possible outcomes; the fragment pairs vary each time. You can try it yourself in the simulation at the end.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 8 : FISSION PRODUCTS -->
+<section class="slide" data-title="Fission products &amp; radiation">
+  <p class="kicker">Fission · Part 2</p>
+  <h2>Fission products, radiation &amp; waste</h2>
+  <div class="cols">
+    <div>
+      <ul class="tick-list">
+        <li><strong>Asymmetric split:</strong> fragments cluster around A ≈ 95 (e.g. Kr-92, Sr-90) and A ≈ 140 (e.g. Ba-141, Cs-137, I-131). About 90% of the 200 MeV appears as fragment kinetic energy, which becomes heat in the fuel.</li>
+        <li><strong>Unstable fragments:</strong> fission fragments are neutron-rich, so they decay by β⁻ emission (a neutron → proton + electron + antineutrino), usually with γ radiation; heavy actinides in spent fuel also emit α particles.</li>
+        <li><strong>Decay heat:</strong> even after shutdown, the decaying fragments still produce about 7% of full power. This residual heat is what melted the Fukushima cores after the reactors had already been shut down <span class="cite">(World Nuclear Association, 2024)</span>.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Half-lives set the waste problem</h3>
+      <table class="mini-table">
+        <thead><tr><th>Isotope</th><th>Radiation</th><th>Half-life</th></tr></thead>
+        <tbody>
+          <tr><td>Iodine-131</td><td>β⁻, γ</td><td>8 days</td></tr>
+          <tr><td>Strontium-90</td><td>β⁻</td><td>28.8 years</td></tr>
+          <tr><td>Caesium-137</td><td>β⁻, γ</td><td>30.1 years</td></tr>
+          <tr><td>Plutonium-239</td><td>α</td><td>24,100 years</td></tr>
+        </tbody>
+      </table>
+      <p>High-level waste must be isolated for ~10,000+ years. Finland's Onkalo repository, the world's first deep geological disposal site, is only now beginning operation <span class="cite">(Posiva, 2025)</span>.</p>
+      <p class="key-idea">Fusion's contrast: its direct product (He-4) is stable. Neutron bombardment does make reactor components radioactive, but with half-lives of decades, not millennia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 9 : BREEDING -->
+<section class="slide" data-title="Breeding plutonium">
+  <p class="kicker">Fission · Part 3</p>
+  <h2>Neutron absorption in U-238: breeding Pu-239</h2>
+  <div class="cols">
+    <div>
+      <p>Most of a fuel rod (95–97%) is U-238, which rarely fissions. Instead it captures a neutron and, through two β⁻ decays, becomes plutonium-239:</p>
+      <div class="eq-block">
+        <p><span class="iso"><span class="an">238<br>92</span>U</span> + <span class="iso"><span class="an">1<br>0</span>n</span> → <span class="iso"><span class="an">239<br>92</span>U</span> + γ</p>
+        <p><span class="iso"><span class="an">239<br>92</span>U</span> → <span class="iso"><span class="an">239<br>93</span>Np</span> + β⁻ + ν̄ <span class="eq-e">(t½ = 23.5 min)</span></p>
+        <p><span class="iso"><span class="an">239<br>93</span>Np</span> → <span class="iso"><span class="an">239<br>94</span>Pu</span> + β⁻ + ν̄ <span class="eq-e">(t½ = 2.36 days)</span></p>
+      </div>
+      <p>Pu-239 is fissile. Unlike U-235, which needs slow neutrons, Pu-239 fissions efficiently with fast neutrons. This is the basis of fast breeder reactors, which run without a moderator and can create more fuel than they burn.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Why breeding cuts both ways</h3>
+        <ul class="tick-list">
+          <li>In an ordinary reactor, bred Pu-239 quietly supplies roughly a third of the energy by the end of a fuel cycle <span class="cite">(World Nuclear Association, 2024)</span>.</li>
+          <li>Breeder reactors could stretch uranium supplies ~60-fold by burning the abundant U-238.</li>
+          <li>The same physics also produces weapons-grade material, since Pu-239 is the core of most nuclear arsenals. This dual-use problem is the reason for the international safeguards regime (the NPT and IAEA inspections), a legal factor we return to on slide 13.</li>
+        </ul>
+      </div>
+      <p class="key-idea">Fusion has no equivalent chain: D–T reactions cannot "run away" (any disturbance cools the plasma and fusion simply stops) and produce no fissile material.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 10 : ENERGY TRANSFORMATIONS -->
+<section class="slide" data-title="Reactor to grid">
+  <p class="kicker">Engineering</p>
+  <h2>From nucleus to grid: the energy transformations</h2>
+  <div class="chain-flow" aria-label="Energy transformation chain">
+    <span class="chain-step">Nuclear potential energy</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Kinetic energy of fragments &amp; neutrons</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Thermal energy in coolant</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Kinetic energy of steam &amp; turbine</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Electrical energy</span>
+  </div>
+  <div class="cols cols-chart">
+    <figure class="panel chart-panel">
+      <svg viewBox="0 0 760 340" class="diagram" role="img" aria-label="Annotated schematic of a pressurised water reactor from core to grid">
+        <!-- containment -->
+        <path d="M40 320 L40 120 Q40 40 150 40 Q260 40 260 120 L260 320 Z" class="pwr-containment"/>
+        <text x="150" y="335" text-anchor="middle" class="dg-sub">Containment building</text>
+        <!-- core -->
+        <rect x="80" y="180" width="90" height="120" rx="6" class="pwr-core"/>
+        <text x="125" y="245" text-anchor="middle" class="dg-label">Core</text>
+        <rect x="95" y="150" width="8" height="60" class="pwr-rod"/><rect x="120" y="150" width="8" height="60" class="pwr-rod"/><rect x="145" y="150" width="8" height="60" class="pwr-rod"/>
+        <text x="125" y="140" text-anchor="middle" class="dg-sub">Control rods</text>
+        <!-- primary loop -->
+        <path d="M170 200 H215 V120 H196" class="pwr-pipe pipe-hot"/>
+        <path d="M196 290 H215 V260 M170 280 H215 V290" class="pwr-pipe pipe-cold"/>
+        <rect x="185" y="115" width="24" height="150" rx="10" class="pwr-sg"/>
+        <text x="197" y="100" text-anchor="middle" class="dg-sub">Steam generator</text>
+        <!-- secondary loop -->
+        <path d="M209 140 H330 V170" class="pwr-pipe pipe-steam"/>
+        <text x="268" y="130" text-anchor="middle" class="dg-sub">Steam</text>
+        <!-- turbine + generator -->
+        <polygon points="300,170 360,150 360,230 300,210" class="pwr-turbine"/>
+        <text x="330" y="250" text-anchor="middle" class="dg-sub">Turbine</text>
+        <rect x="380" y="168" width="80" height="46" rx="8" class="pwr-gen"/>
+        <text x="420" y="196" text-anchor="middle" class="dg-label">Generator</text>
+        <line x1="360" y1="191" x2="380" y2="191" class="pwr-shaft"/>
+        <!-- condenser -->
+        <rect x="300" y="275" width="110" height="40" rx="8" class="pwr-cond"/>
+        <text x="355" y="300" text-anchor="middle" class="dg-sub">Condenser</text>
+        <path d="M330 230 V275" class="pwr-pipe pipe-cold"/>
+        <path d="M300 295 H240 V270 M240 270 H209" class="pwr-pipe pipe-cold"/>
+        <!-- cooling tower -->
+        <path d="M640 320 L655 210 Q670 190 685 210 L700 320 Z" class="pwr-tower"/>
+        <text x="670" y="335" text-anchor="middle" class="dg-sub">Cooling tower</text>
+        <path d="M410 295 H630" class="pwr-pipe pipe-cold"/>
+        <!-- grid -->
+        <path d="M460 191 H540" class="pwr-wire"/>
+        <path d="M540 160 L540 220 M525 175 H555 M530 191 H550" class="pwr-pylon"/>
+        <text x="540" y="245" text-anchor="middle" class="dg-sub">To grid</text>
+      </svg>
+      <figcaption>Annotated schematic of a pressurised water reactor (PWR), the most common design worldwide. The primary loop is pressurised water at ~320 °C and 155 atm, kept liquid so it never boils inside the core.</figcaption>
+    </figure>
+    <div>
+      <ul class="tick-list">
+        <li>Fragment kinetic energy heats the fuel; pressurised water carries the heat out of the core (the water also acts as the moderator).</li>
+        <li>A heat exchanger boils a separate water loop into steam, keeping radioactive water contained.</li>
+        <li>Steam spins a turbine; electromagnetic induction in the generator produces electricity.</li>
+      </ul>
+      <p class="key-idea">Overall efficiency is only about 33%, because the steam cycle is limited by thermodynamics (η = 1 − T<sub>c</sub>/T<sub>h</sub>). A fusion plant would use exactly the same back end: its 14.1 MeV neutrons heat a lithium blanket, which raises steam. Fusion and fission differ at the nucleus, not at the turbine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 11 : COMPARISON -->
+<section class="slide" data-title="Head-to-head">
+  <p class="kicker">The comparison</p>
+  <h2>Fusion vs fission: head to head</h2>
+  <div class="table-scroll">
+    <table class="cmp-table">
+      <thead>
+        <tr><th></th><th class="c-fusion">Fusion (D–T)</th><th class="c-fission">Fission (U-235 / Pu-239)</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>Fuel availability</th><td>Deuterium: effectively unlimited (seawater). Tritium: must be bred from lithium, unproven at scale.</td><td>Uranium: mined, finite but sufficient for ~100+ yrs at current use; only 0.72% is U-235, so enrichment is needed.</td></tr>
+        <tr><th>Mass → energy</th><td>0.38% of fuel mass (p–p chain in stars: 0.7%)</td><td>~0.09% of fuel mass</td></tr>
+        <tr><th>Energy per kg</th><td>3.4 × 10¹⁴ J, ~4× fission, ~14,000,000× coal</td><td>8.2 × 10¹³ J (pure U-235)</td></tr>
+        <tr><th>Waste</th><td>Helium (stable); activated reactor parts decay over decades</td><td>Fission fragments &amp; actinides, hazardous for millennia</td></tr>
+        <tr><th>Runaway risk</th><td>None. There is no chain reaction, so a plasma disruption simply stops the reaction</td><td>Chain reaction must be actively controlled; meltdown possible (Chernobyl 1986, Fukushima 2011)</td></tr>
+        <tr><th>Weapons link</th><td>No fissile products</td><td>Enrichment &amp; Pu-239 breeding are proliferation pathways (NPT safeguards)</td></tr>
+        <tr><th>Status today</th><td>Experimental. Net fuel gain achieved once (NIF 2022); no electricity generated; ITER full operation ~2035+</td><td>Mature: ~440 reactors, ~9% of world electricity, 60+ years of operating data</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="footnote">Sources: IAEA (2024); LLNL (2022); World Nuclear Association (2024); ITER Organization (2025).</p>
+</section>
+
+<!-- ========================================================= SLIDE 12 : EVIDENCE -->
+<section class="slide" data-title="Weighing the evidence">
+  <p class="kicker">Evidence &amp; its limits</p>
+  <h2>Weighing the evidence: safety, emissions and uncertainty</h2>
+  <div class="cols cols-chart">
+    <figure class="panel chart-panel">
+      <svg viewBox="0 0 760 300" class="chart" role="img" aria-label="Horizontal bar chart of deaths per terawatt-hour of electricity by source; nuclear is among the lowest">
+        <g class="axis-text"><text x="380" y="294" text-anchor="middle" class="axis-title">Deaths per TWh of electricity (accidents + air pollution)</text></g>
+        <!-- scale: 24.6 → 500px, x0=190 -->
+        <g class="barrow" data-tip="Coal: 24.6 deaths/TWh, mostly air pollution (Our World in Data, 2020)">
+          <text x="180" y="47" class="row-label" text-anchor="end">Coal</text>
+          <rect x="190" y="32" width="500" height="22" rx="4" class="bar bar-mut"/><text x="682" y="47" class="bar-val bar-val-in">24.6</text>
+        </g>
+        <g class="barrow" data-tip="Oil: 18.4 deaths/TWh">
+          <text x="180" y="82" class="row-label" text-anchor="end">Oil</text>
+          <rect x="190" y="67" width="374" height="22" rx="4" class="bar bar-mut"/><text x="556" y="82" class="bar-val bar-val-in">18.4</text>
+        </g>
+        <g class="barrow" data-tip="Natural gas: 2.8 deaths/TWh">
+          <text x="180" y="117" class="row-label" text-anchor="end">Natural gas</text>
+          <rect x="190" y="102" width="57" height="22" rx="4" class="bar bar-mut"/><text x="255" y="117" class="bar-val">2.8</text>
+        </g>
+        <g class="barrow" data-tip="Hydropower: 1.3 deaths/TWh, dominated by the 1975 Banqiao dam failure">
+          <text x="180" y="152" class="row-label" text-anchor="end">Hydro</text>
+          <rect x="190" y="137" width="26" height="22" rx="4" class="bar bar-mut"/><text x="224" y="152" class="bar-val">1.3</text>
+        </g>
+        <g class="barrow" data-tip="Wind: 0.04 deaths/TWh">
+          <text x="180" y="187" class="row-label" text-anchor="end">Wind</text>
+          <rect x="190" y="172" width="3" height="22" rx="1" class="bar bar-mut"/><text x="201" y="187" class="bar-val">0.04</text>
+        </g>
+        <g class="barrow" data-tip="Nuclear (fission): 0.03 deaths/TWh, including Chernobyl and Fukushima estimates">
+          <text x="180" y="222" class="row-label" text-anchor="end">Nuclear</text>
+          <rect x="190" y="207" width="3" height="22" rx="1" class="bar bar-fis"/><text x="201" y="222" class="bar-val"><tspan class="emph">0.03</tspan>, incl. Chernobyl &amp; Fukushima</text>
+        </g>
+        <g class="barrow" data-tip="Solar: 0.02 deaths/TWh">
+          <text x="180" y="257" class="row-label" text-anchor="end">Solar</text>
+          <rect x="190" y="242" width="2" height="22" rx="1" class="bar bar-mut"/><text x="200" y="257" class="bar-val">0.02</text>
+        </g>
+      </svg>
+      <figcaption>Deaths per TWh. Source: Ritchie &amp; Rosado, Our World in Data (2020), from Markandya &amp; Wilkinson (2007) and Sovacool et al. (2016).</figcaption>
+    </figure>
+    <figure class="panel chart-panel">
+      <svg viewBox="0 0 760 300" class="chart" role="img" aria-label="Range plot of lifecycle greenhouse gas emissions per kilowatt-hour; nuclear and wind lowest, with uncertainty ranges shown">
+        <g class="axis-text"><text x="380" y="294" text-anchor="middle" class="axis-title">Lifecycle emissions, g CO₂-eq per kWh, dot = median, line = published range</text></g>
+        <!-- scale: 910 → 545px, x0=145 -->
+        <g class="barrow" data-tip="Coal: median 820, range 740–910 g/kWh (IPCC, 2014)">
+          <text x="135" y="52" class="row-label" text-anchor="end">Coal</text>
+          <line x1="588" y1="47" x2="690" y2="47" class="range range-mut"/><circle cx="636" cy="47" r="7" class="dot dot-mut"/><text x="700" y="52" class="row-val">820</text>
+        </g>
+        <g class="barrow" data-tip="Natural gas: median 490, range 410–650 g/kWh">
+          <text x="135" y="102" class="row-label" text-anchor="end">Natural gas</text>
+          <line x1="391" y1="97" x2="534" y2="97" class="range range-mut"/><circle cx="438" cy="97" r="7" class="dot dot-mut"/><text x="544" y="102" class="row-val">490</text>
+        </g>
+        <g class="barrow" data-tip="Solar PV: median 48, range 18–180 g/kWh">
+          <text x="135" y="152" class="row-label" text-anchor="end">Solar PV</text>
+          <line x1="156" y1="147" x2="253" y2="147" class="range range-mut"/><circle cx="174" cy="147" r="7" class="dot dot-mut"/><text x="263" y="152" class="row-val">48</text>
+        </g>
+        <g class="barrow" data-tip="Nuclear: median 12, range 3.7–110 g/kWh, a 30-fold spread between studies">
+          <text x="135" y="202" class="row-label" text-anchor="end">Nuclear</text>
+          <line x1="147" y1="197" x2="211" y2="197" class="range range-fis"/><circle cx="152" cy="197" r="7" class="dot dot-fis"/><text x="221" y="202" class="row-val"><tspan class="emph">12</tspan> (range 3.7–110)</text>
+        </g>
+        <g class="barrow" data-tip="Wind: median 11, range 7–56 g/kWh">
+          <text x="135" y="252" class="row-label" text-anchor="end">Wind</text>
+          <line x1="149" y1="247" x2="179" y2="247" class="range range-mut"/><circle cx="152" cy="247" r="7" class="dot dot-mut"/><text x="189" y="252" class="row-val">11</text>
+        </g>
+      </svg>
+      <figcaption>Lifecycle greenhouse-gas emissions. Source: IPCC AR5 WGIII Annex III (2014), median and min–max of published studies.</figcaption>
+    </figure>
+  </div>
+  <div class="panel limits-panel">
+    <h3>Limitations of this data (read before trusting the numbers)</h3>
+    <ul class="tick-list">
+      <li><strong>Nuclear death tolls are model-dependent.</strong> Long-term Chernobyl estimates range from about 4,000 (WHO, 2005) to 30,000–60,000 (TORCH, 2006). The gap exists because low-dose radiation harm is extrapolated using the contested linear no-threshold model, and the data cannot currently tell these estimates apart.</li>
+      <li><strong>Lifecycle CO₂ ranges span a factor of 30 for nuclear</strong> (3.7–110 g/kWh), depending on assumptions about enrichment energy and ore grade. The single median figure hides genuine disagreement between methods.</li>
+      <li><strong>Every fusion figure on these slides is a projection.</strong> There is no operational fusion power plant, so cost, safety and waste claims rest on models and single experiments (e.g. one net-gain shot at NIF), not statistics. Extraordinary care is needed comparing a 60-year operating record against a forecast.</li>
+      <li><strong>10,000-year waste containment is untestable</strong>: the safety of a geological repository rests on modelling, not on observation.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 13 : SOCIO-SCIENTIFIC -->
+<section class="slide" data-title="Socio-scientific factors">
+  <p class="kicker">Beyond the physics</p>
+  <h2>The factors that actually decide it</h2>
+  <div class="def-grid factors-grid">
+    <div class="def-card">
+      <h3>Economic</h3>
+      <p>Fission plants are cheap to run but brutally expensive to build: Hinkley Point C (UK) has blown out past £40 billion. CSIRO's GenCost report finds new nuclear would be the most expensive new electricity for Australia, versus firmed renewables <span class="cite">(CSIRO/AEMO, 2024)</span>. Fusion is a research expense: ITER has cost over US$22 billion before producing any power.</p>
+    </div>
+    <div class="def-card">
+      <h3>Legal</h3>
+      <p>Nuclear power generation is prohibited in Australia by federal law, the EPBC Act 1999 (s140A) and ARPANS Act 1998 <span class="cite">(Cth of Australia, 1999)</span>. Internationally, the Non-Proliferation Treaty and IAEA safeguards exist precisely because fission physics (slide 9) creates weapons material. Fusion currently sits outside most of this regime.</p>
+    </div>
+    <div class="def-card">
+      <h3>Political</h3>
+      <p>Energy security drives policy. The 2022 gas crisis pushed several countries back toward fission, while Germany completed its phase-out in 2023 in response to public pressure after Fukushima. Nuclear power was also a central, unresolved issue in Australia's 2025 federal election, so this exact question is live national politics.</p>
+    </div>
+    <div class="def-card">
+      <h3>Sociocultural</h3>
+      <p>Chernobyl (1986) and Fukushima (2011) reshaped public risk perception far beyond their measured death tolls. Public dread of radiation tends to outweigh the statistics (slide 12). In Australia, uranium mining and proposed waste sites also intersect with First Nations land rights, as seen with the abandoned Kimba waste facility (2023).</p>
+    </div>
+    <div class="def-card">
+      <h3>Ethical</h3>
+      <p>Fission waste imposes a burden on people living hundreds of generations from now, who get no benefit and no vote. But is it ethical for wealthy nations to reject a proven low-carbon source while emissions keep warming the planet? Both stances claim the moral high ground, and the evidence on slide 12 supports parts of each.</p>
+    </div>
+    <div class="def-card">
+      <h3>Why this shapes viability</h3>
+      <p>"Viable" is about more than physics. Fusion's physics advantages (slides 5–6, 9) have not made it viable, because the engineering has not caught up. Fission's physics is proven, yet law, cost and public trust still block it in many countries. A genuinely viable power source has to clear every one of these hurdles at once.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 14 : STANCE -->
+<section class="slide" data-title="Our stance">
+  <p class="kicker">Summary statement</p>
+  <h2>Our stance</h2>
+  <div class="stance-box">
+    <p class="stance-line">Fission is the only currently viable nuclear power source, and should keep operating as a low-carbon bridge where it is already established, while fusion research deserves sustained investment as the likely long-term source. For Australia specifically, new fission doesn't clear the economic or legal bar; renewables plus fusion research is the defensible path.</p>
+  </div>
+  <div class="cols">
+    <div>
+      <h3>Why we hold this view</h3>
+      <ul class="tick-list">
+        <li><strong>Fission works now:</strong> around 440 reactors supply 9% of world electricity, and the data show it is among the safest (0.03 deaths/TWh) and cleanest (median 12 g CO₂/kWh) sources ever operated (slides 11–12).</li>
+        <li><strong>Fusion is superior physics but not yet an energy source:</strong> ~4× the energy per kg, no chain-reaction risk, no millennia-scale waste, near-unlimited deuterium (slides 5–6, 9, 11), but it has produced net energy in exactly one laboratory experiment and zero watts of electricity.</li>
+        <li><strong>For Australia:</strong> GenCost's economics (2024), the s140A legal ban, and our abundant renewable resources together make new fission the slower, costlier route to decarbonising (slide 13).</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Accounting for other perspectives</h3>
+      <ul class="tick-list">
+        <li><strong>"Phase out fission now"</strong> (e.g. Germany's position) takes waste ethics and accident dread seriously, but the safety data (slide 12) show replacing fission with fossil fuels costs far more lives; Germany's emissions rose after its phase-out.</li>
+        <li><strong>"Go all-in on fission, everywhere"</strong> is stronger where grids lack renewable resources, and our stance allows exactly that. In Australia, though, it runs into cost data and law, not just opinion.</li>
+        <li><strong>"Fusion is a distraction"</strong> has a point: it's decades away and unproven at scale. We still fund it because its fuel availability and waste profile (slides 6, 8) are the only known endgame for centuries-scale energy.</li>
+      </ul>
+      <p class="key-idea">Our verdict follows the binding-energy curve itself: fission is the energy we can harvest today; fusion is the larger prize we haven't yet reached.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 15 : SOURCES -->
+<section class="slide" data-title="Sources &amp; validity">
+  <p class="kicker">Referencing</p>
+  <h2>Sources &amp; how we judged their validity</h2>
+  <div class="cols">
+    <div>
+      <h3>Bibliography</h3>
+      <ol class="bib-list">
+        <li>IAEA (2024). Nuclear Power Reactors in the World, Reference Data Series No. 2. Vienna: International Atomic Energy Agency.</li>
+        <li>IPCC (2014). AR5 Climate Change 2014: Mitigation, WGIII Annex III, lifecycle emission factors.</li>
+        <li>Ritchie, H. &amp; Rosado, P. (2020). "Nuclear Energy", Our World in Data, safety data after Markandya &amp; Wilkinson (2007), The Lancet, and Sovacool et al. (2016).</li>
+        <li>Lawrence Livermore National Laboratory (2022). "National Ignition Facility achieves fusion ignition", 13 Dec 2022.</li>
+        <li>ITER Organization (2025). "What is ITER?", iter.org.</li>
+        <li>World Nuclear Association (2024). "Physics of Uranium and Nuclear Energy"; "Radioactive Waste Management".</li>
+        <li>Wang, M. et al. (2021). "The AME2020 atomic mass evaluation", Chinese Physics C 45, binding energy data.</li>
+        <li>CSIRO &amp; AEMO (2024). GenCost 2023-24: Final Report.</li>
+        <li>Commonwealth of Australia (1999). Environment Protection and Biodiversity Conservation Act, s140A.</li>
+        <li>WHO (2005) &amp; TORCH Report (2006), Chernobyl health-effect estimates.</li>
+        <li>CODATA (2022). Recommended values of fundamental physical constants, NIST.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Validity evaluation</h3>
+      <ul class="tick-list">
+        <li><strong>Peer-reviewed / primary literature</strong> (AME2020, The Lancet, IPCC): highest reliability, used for all physical constants, binding energies and emission ranges.</li>
+        <li><strong>International agencies</strong> (IAEA, WHO): authoritative but institutional, IAEA promotes nuclear technology, so its safety framing was cross-checked against independent academic sources.</li>
+        <li><strong>Industry bodies</strong> (World Nuclear Association): useful technical detail but a declared pro-nuclear advocacy group, used only for physics facts verifiable elsewhere, not for judgements.</li>
+        <li><strong>Advocacy reports</strong> (TORCH, commissioned by the European Greens): included deliberately to show the range of Chernobyl estimates rather than one side's number.</li>
+      </ul>
+      <div class="panel">
+        <h3>Our primary source: the simulation</h3>
+        <p>The interactive model on the next page is our own primary source, a computational model built directly from the physics of slides 5, 7 and 9 (thermal-neutron fission, control-rod absorption, U-238 → Pu-239 breeding, and the Coulomb barrier in D–T fusion). Its limitations are stated on the page itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= SLIDE 16 : SIM INTRO -->
+<section class="slide sim-launch" data-title="Try it yourself">
+  <div class="hero-content">
+    <p class="kicker">Interactive model</p>
+    <h2 class="launch-title">Now try it yourself</h2>
+    <p class="hero-sub">Run your own fission chain reaction, pull the control rods, change the enrichment, breed plutonium. Then switch to fusion mode and see why 100 million degrees is the price of admission.</p>
+    <button class="btn btn-primary btn-big" id="launchSimBtn">Launch the simulation</button>
+  </div>
+</section>
+
+</main>
+
+<!-- ======= SIMULATION PAGE ======= -->
+<section id="simPage" hidden>
+  <div class="sim-header">
+    <div>
+      <p class="kicker">Interactive model, our primary source</p>
+      <h2>Nuclear reactor simulation</h2>
+    </div>
+    <div class="sim-tabs" role="tablist">
+      <button class="tab active" id="tabFission" role="tab" aria-selected="true">Fission, chain reaction</button>
+      <button class="tab" id="tabFusion" role="tab" aria-selected="false">Fusion, D–T plasma</button>
+    </div>
+  </div>
+
+  <div class="sim-layout">
+    <div class="sim-stage">
+      <canvas id="simCanvas" width="880" height="520" aria-label="Interactive nuclear reaction simulation"></canvas>
+      <div class="sim-readout" id="simReadout"></div>
+    </div>
+
+    <aside class="sim-controls" id="simControls">
+      <!-- fission controls -->
+      <div class="ctrl-group" data-mode="fission">
+        <h3>Fission controls</h3>
+        <button class="btn btn-primary" id="fireBtn">Fire a neutron</button>
+        <label class="ctrl">
+          <span>Neutron source <em id="srcState">off</em></span>
+          <input type="checkbox" id="autoSource">
+        </label>
+        <label class="ctrl">
+          <span>Control rod insertion <em id="rodVal">40%</em></span>
+          <input type="range" id="rodSlider" min="0" max="100" value="40">
+        </label>
+        <label class="ctrl">
+          <span>U-235 enrichment <em id="enrichVal">4%</em></span>
+          <input type="range" id="enrichSlider" min="1" max="100" value="4">
+        </label>
+        <label class="ctrl">
+          <span>Moderator (slows neutrons) <em id="modState">on</em></span>
+          <input type="checkbox" id="moderator" checked>
+        </label>
+        <button class="btn" id="resetFission">Reset core</button>
+        <div class="ctrl-hint">
+          <p><strong>Things to try:</strong></p>
+          <ul>
+            <li>Pull the rods to 0% and watch the reaction go <em>supercritical</em> (k &gt; 1).</li>
+            <li>Turn the moderator <em>off</em> and the fast neutrons rarely fission U-235, so the chain dies (slide 7).</li>
+            <li>Watch grey U-238 capture neutrons and become <span class="pu-chip">Pu-239</span> (slide 9).</li>
+            <li>Raise enrichment to 90% and see why weapons-grade material is dangerous.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- fusion controls -->
+      <div class="ctrl-group" data-mode="fusion" hidden>
+        <h3>Fusion controls</h3>
+        <label class="ctrl">
+          <span>Plasma temperature <em id="tempVal">20 million K</em></span>
+          <input type="range" id="tempSlider" min="5" max="300" value="20">
+        </label>
+        <label class="ctrl">
+          <span>Magnetic confinement <em id="magState">on</em></span>
+          <input type="checkbox" id="magField" checked>
+        </label>
+        <button class="btn" id="resetFusion">Reset plasma</button>
+        <div class="ctrl-hint">
+          <p><strong>Things to try:</strong></p>
+          <ul>
+            <li>At 20 million K the ions just <em>bounce apart</em>, because the Coulomb barrier wins (slide 5).</li>
+            <li>Raise the temperature past ~100 million K and fusion begins: D + T → He-4 + n.</li>
+            <li>Switch confinement <em>off</em>, the plasma touches the wall and instantly cools. Notice the reaction just stops: <strong>no runaway is possible</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn btn-ghost" id="backToSlides">← Back to slides</button>
+    </aside>
+  </div>
+
+  <div class="panel limits-panel sim-limits">
+    <h3>Limitations of this model</h3>
+    <p>Like every model, this simulation trades accuracy for clarity. It is 2-D, uses about 100 nuclei instead of ~10²⁴, exaggerates collision sizes, and replaces true reaction cross-sections with simplified probabilities (slow neutrons always fission U-235 here; in reality the probability is high but not certain). The fragment tracks, γ rays and neutrino emission are decorative rather than to scale, and the fusion mode treats temperature as a single speed rather than a Maxwell–Boltzmann distribution. Its job is to show the <em>mechanisms</em>, namely chain reactions, criticality, breeding, and the Coulomb barrier, not to give reactor-grade numbers.</p>
+  </div>
+</section>
+
+<!-- ======= NAV BUTTONS ======= -->
+<div class="nav-corner" id="navCorner">
+  <button class="btn btn-ghost" id="prevBtn" hidden>← Back</button>
+  <button class="btn btn-ghost" id="skipBtn">Skip to simulation</button>
+  <button class="btn btn-primary" id="nextBtn">Next →</button>
+</div>
+<div class="slide-counter" id="slideCounter" hidden></div>
+
+<div class="tooltip" id="tooltip" hidden></div>
+
+<script src="app.js"></script>
+<script src="sim.js"></script>
+</body>
+</html>
