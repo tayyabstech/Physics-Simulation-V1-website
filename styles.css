@@ -262,8 +262,10 @@ ul.tick-list strong, ul.tick-list em { color: var(--ink); }
 .stance-line { font-size: 1.2rem; line-height: 1.55; color: var(--ink); }
 
 /* ---------- bibliography ---------- */
-.bib-list { margin: 0.4rem 0 0 1.2rem; font-size: 0.98rem; color: var(--ink-2); }
-.bib-list li { margin-bottom: 0.6rem; }
+/* APA 7 reference list: unnumbered, alphabetised, hanging indent */
+.bib-list { list-style: none; margin: 0.4rem 0 0 0; font-size: 0.82rem; color: var(--ink-2); }
+.bib-list li { margin-bottom: 0.42rem; padding-left: 1.6em; text-indent: -1.6em; line-height: 1.42; }
+.bib-list em { color: var(--ink-2); }
 
 /* ---------- buttons & nav ---------- */
 .btn {
