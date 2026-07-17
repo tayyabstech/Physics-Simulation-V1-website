@@ -374,6 +374,37 @@ ul.tick-list strong, ul.tick-list em { color: var(--ink); }
 .pu-chip { background: rgba(144,133,233,0.2); color: #b0a7f5; border-radius: 6px; padding: 0 0.4em; font-weight: 650; }
 .sim-limits { max-width: 1140px; }
 
+/* ---------- live event log ---------- */
+.sim-log-panel { margin-top: 1.1rem; max-width: 1140px; border-left: 3px solid var(--aqua); }
+.sim-log-panel h3 { color: var(--aqua); }
+.sim-log {
+  min-height: 148px; max-height: 220px; overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+.sim-log-empty { color: var(--ink-mut); font-size: 0.92rem; padding: 0.3rem 0; }
+.log-entry {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--grid);
+  animation: logIn 0.3s ease;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-entry:nth-child(1) { opacity: 1; }
+.log-entry:nth-child(2) { opacity: 0.88; }
+.log-entry:nth-child(3) { opacity: 0.74; }
+.log-entry:nth-child(4) { opacity: 0.6; }
+.log-entry:nth-child(5) { opacity: 0.48; }
+.log-entry:nth-child(6) { opacity: 0.36; }
+/* fill-mode intentionally left at the default (none) — the entrance
+   animation must not persist its own opacity past 0.3s, or it would
+   permanently override the nth-child fade above */
+@keyframes logIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.log-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; margin-top: 0.45em; }
+.log-dot-fission { background: var(--fission); }
+.log-dot-breed { background: #9085e9; }
+.log-dot-fusion { background: var(--fusion); }
+.log-dot-action { background: var(--ink-mut); }
+.log-text { color: var(--ink-2); font-size: 0.94rem; line-height: 1.5; }
+
 /* ---------- tooltip ---------- */
 .tooltip {
   position: fixed; z-index: 100; pointer-events: none;

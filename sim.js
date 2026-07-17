@@ -18,6 +18,63 @@
   let rafId = null;
   let frame = 0;
 
+  /* ---------------- LIVE EVENT LOG ---------------- */
+  const logEl = document.getElementById('simLog');
+  const LOG_CAP = 6;
+  let logEntries = [];
+
+  function renderLog() {
+    logEl.innerHTML = logEntries.map(function (e) {
+      return '<div class="log-entry"><span class="log-dot log-dot-' + e.kind + '"></span>' +
+        '<span class="log-text">' + e.text + '</span></div>';
+    }).join('');
+  }
+
+  function pushLog(text, kind) {
+    logEntries.unshift({ text: text, kind: kind });
+    if (logEntries.length > LOG_CAP) logEntries.length = LOG_CAP;
+    renderLog();
+  }
+
+  function clearLog(placeholderText) {
+    logEntries = [];
+    logEl.innerHTML = '<p class="sim-log-empty">' + placeholderText + '</p>';
+  }
+
+  // per-interval accumulators — real events are aggregated and flushed a
+  // few times a second so a supercritical chain reaction (or a hot plasma)
+  // reads as a paced commentary instead of flooding the log every frame
+  let fisU235Accum = 0, fisPu239Accum = 0, fisMevAccum = 0, fisNeutronAccum = 0;
+  let breedAccum = 0;
+  let rodAbsorbAccum = 0;
+  let fusAccum = 0, fusMevAccum = 0;
+
+  function flushFissionLog() {
+    if (fisU235Accum > 0 || fisPu239Accum > 0) {
+      let who;
+      if (fisPu239Accum === 0) who = (fisU235Accum === 1 ? 'A U-235 nucleus' : fisU235Accum + ' U-235 nuclei');
+      else if (fisU235Accum === 0) who = (fisPu239Accum === 1 ? 'A Pu-239 nucleus' : fisPu239Accum + ' Pu-239 nuclei');
+      else who = fisU235Accum + ' U-235 and ' + fisPu239Accum + ' Pu-239 nuclei';
+      pushLog(who + ' split, releasing about ' + fisMevAccum.toLocaleString() + ' MeV and ' + fisNeutronAccum + ' new neutrons.', 'fission');
+      fisU235Accum = 0; fisPu239Accum = 0; fisMevAccum = 0; fisNeutronAccum = 0;
+    }
+    if (breedAccum > 0) {
+      pushLog((breedAccum === 1 ? 'A U-238 nucleus' : breedAccum + ' U-238 nuclei') + ' captured a neutron and started transforming into Pu-239.', 'breed');
+      breedAccum = 0;
+    }
+    if (rodAbsorbAccum >= 3) {
+      pushLog(rodAbsorbAccum + ' neutrons were absorbed by the control rods instead of causing fission.', 'action');
+    }
+    rodAbsorbAccum = 0;
+  }
+
+  function flushFusionLog() {
+    if (fusAccum > 0) {
+      pushLog((fusAccum === 1 ? 'A deuterium and a tritium nucleus fused' : fusAccum + ' deuterium-tritium pairs fused') + ' into helium-4 and a fast neutron, releasing about ' + fusMevAccum.toFixed(1) + ' MeV.', 'fusion');
+      fusAccum = 0; fusMevAccum = 0;
+    }
+  }
+
   /* ---------------- FISSION STATE ---------------- */
   const F = {
     nuclei: [], neutrons: [], fragments: [], flashes: [],
@@ -31,6 +88,8 @@
   function buildCore() {
     F.nuclei = []; F.neutrons = []; F.fragments = []; F.flashes = [];
     F.fissions = 0; F.puBred = 0; F.energyMeV = 0; F.popHistory = [];
+    fisU235Accum = 0; fisPu239Accum = 0; fisMevAccum = 0; fisNeutronAccum = 0;
+    breedAccum = 0; rodAbsorbAccum = 0;
     const cols = 13, rows = 7;
     for (let c = 0; c < cols; c++) {
       for (let r = 0; r < rows; r++) {
@@ -52,9 +111,12 @@
   }
 
   function spawnFission(nuc) {
+    const wasType = nuc.type;
     nuc.type = 'SPENT';
     F.fissions++; F.energyMeV += 200;
     const n = 2 + (Math.random() < 0.5 ? 1 : 0); // 2–3 neutrons
+    if (wasType === 'PU239') fisPu239Accum++; else fisU235Accum++;
+    fisMevAccum += 200; fisNeutronAccum += n;
     for (let i = 0; i < n; i++) {
       const a = Math.random() * Math.PI * 2;
       F.neutrons.push({ x: nuc.x, y: nuc.y, vx: Math.cos(a) * 4.2, vy: Math.sin(a) * 4.2, fast: true });
@@ -87,7 +149,7 @@
       for (const rr of rods) {
         if (nt.x > rr.x && nt.x < rr.x + rr.w && nt.y > rr.y && nt.y < rr.y + rr.h) {
           F.flashes.push({ x: nt.x, y: nt.y, r: 2, life: 8 });
-          F.neutrons.splice(i, 1); absorbed = true; break;
+          F.neutrons.splice(i, 1); absorbed = true; rodAbsorbAccum++; break;
         }
       }
       if (absorbed) continue;
@@ -111,7 +173,7 @@
           // neutron capture -> (beta, beta) -> Pu-239  [slide 9]
           const p = nt.fast ? 0.1 : 0.25;
           if (Math.random() < p) {
-            nuc.type = 'PU239'; F.puBred++;
+            nuc.type = 'PU239'; F.puBred++; breedAccum++;
             F.flashes.push({ x: nuc.x, y: nuc.y, r: 3, life: 10 });
             F.neutrons.splice(i, 1);
           }
@@ -223,6 +285,7 @@
   function buildPlasma() {
     U.ions = []; U.neutronsOut = []; U.flashes = []; U.refill = [];
     U.fusions = 0; U.energyMeV = 0; U.cooled = false;
+    fusAccum = 0; fusMevAccum = 0;
     for (let i = 0; i < 46; i++) {
       const a = Math.random() * Math.PI * 2, rr = Math.random() * (RING_R - 30);
       const va = Math.random() * Math.PI * 2, s = tempSpeed() * (0.6 + Math.random() * 0.8);
@@ -293,6 +356,7 @@
         // through the Coulomb barrier (threshold ~ tens of millions of K)
         if (isDT && rel2 > 4.6 && Math.random() < (rel2 - 4.6) * 0.06) {
           U.fusions++; U.energyMeV += 17.6;
+          fusAccum++; fusMevAccum += 17.6;
           U.flashes.push({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, r: 4, life: 16 });
           // products: He-4 ash (3.5 MeV) + fast neutron (14.1 MeV) that escapes
           const na = Math.atan2(rvy, rvx);
@@ -402,8 +466,13 @@
   /* ---------------- LOOP & WIRING ---------------- */
   function loop() {
     frame++;
-    if (mode === 'fission') { stepFission(); drawFission(); }
-    else { stepFusion(); drawFusion(); }
+    if (mode === 'fission') {
+      stepFission(); drawFission();
+      if (frame % 24 === 0) flushFissionLog();
+    } else {
+      stepFusion(); drawFusion();
+      if (frame % 24 === 0) flushFusionLog();
+    }
     if (frame % 12 === 0) renderReadout();
     rafId = requestAnimationFrame(loop);
   }
@@ -423,30 +492,49 @@
     tabF.setAttribute('aria-selected', m === 'fission');
     tabU.setAttribute('aria-selected', m === 'fusion');
     document.querySelectorAll('.ctrl-group').forEach(g => { g.hidden = g.dataset.mode !== m; });
+    clearLog(m === 'fission'
+      ? 'Fire a neutron or adjust the controls, and a live explanation of each event will appear here.'
+      : 'Raise the plasma temperature or toggle confinement, and a live explanation of each event will appear here.');
     renderReadout();
   }
   tabF.addEventListener('click', () => setMode('fission'));
   tabU.addEventListener('click', () => setMode('fusion'));
 
   // fission controls
-  document.getElementById('fireBtn').addEventListener('click', fireNeutron);
+  document.getElementById('fireBtn').addEventListener('click', () => {
+    fireNeutron();
+    pushLog('A slow neutron was launched into the reactor core.', 'action');
+  });
   document.getElementById('autoSource').addEventListener('change', e => {
     F.autoSource = e.target.checked;
     document.getElementById('srcState').textContent = F.autoSource ? 'on' : 'off';
+    pushLog('Neutron source turned ' + (F.autoSource ? 'on, neutrons will be released automatically.' : 'off.'), 'action');
   });
   document.getElementById('rodSlider').addEventListener('input', e => {
     F.rodInsert = e.target.value / 100;
     document.getElementById('rodVal').textContent = e.target.value + '%';
   });
+  document.getElementById('rodSlider').addEventListener('change', e => {
+    pushLog('Control rod insertion set to ' + e.target.value + '%.', 'action');
+  });
   document.getElementById('enrichSlider').addEventListener('input', e => {
     F.enrich = e.target.value / 100;
     document.getElementById('enrichVal').textContent = e.target.value + '%';
   });
+  document.getElementById('enrichSlider').addEventListener('change', e => {
+    pushLog('U-235 enrichment set to ' + e.target.value + '%.', 'action');
+  });
   document.getElementById('moderator').addEventListener('change', e => {
     F.moderator = e.target.checked;
     document.getElementById('modState').textContent = F.moderator ? 'on' : 'off';
+    pushLog('Moderator turned ' + (F.moderator
+      ? 'on, fast neutrons will now be slowed so they can trigger further fission.'
+      : 'off, fast neutrons will rarely fission U-235, so the chain should die out.'), 'action');
   });
-  document.getElementById('resetFission').addEventListener('click', buildCore);
+  document.getElementById('resetFission').addEventListener('click', () => {
+    buildCore();
+    clearLog('Fire a neutron or adjust the controls, and a live explanation of each event will appear here.');
+  });
 
   // fusion controls
   document.getElementById('tempSlider').addEventListener('input', e => {
@@ -454,12 +542,21 @@
     document.getElementById('tempVal').textContent = U.tempM + ' million K';
     retune();
   });
+  document.getElementById('tempSlider').addEventListener('change', e => {
+    pushLog('Plasma temperature set to ' + e.target.value + ' million K.', 'action');
+  });
   document.getElementById('magField').addEventListener('change', e => {
     U.magOn = e.target.checked;
     document.getElementById('magState').textContent = U.magOn ? 'on' : 'off';
     if (U.magOn) retune(); // re-heating the plasma
+    pushLog('Magnetic confinement turned ' + (U.magOn
+      ? 'on, the plasma is confined again.'
+      : 'off, the plasma will hit the vessel wall and cool instantly, stopping fusion.'), 'action');
   });
-  document.getElementById('resetFusion').addEventListener('click', buildPlasma);
+  document.getElementById('resetFusion').addEventListener('click', () => {
+    buildPlasma();
+    clearLog('Raise the plasma temperature or toggle confinement, and a live explanation of each event will appear here.');
+  });
 
   buildCore();
   buildPlasma();

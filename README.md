@@ -1,6 +1,6 @@
 # Fusion vs Fission — VCE Physics Unit 2, Option 2.2
 
-Interactive presentation website: 16 slides + a two-mode nuclear reaction simulation
+Interactive presentation website: 17 slides + a two-mode nuclear reaction simulation
 (fission chain reaction / D–T fusion plasma). Plain HTML/CSS/JS — no build step, no dependencies.
 
 ## Preview locally
@@ -17,7 +17,7 @@ python -m http.server 8000
 4. Deploy — you'll get a shareable URL for the teacher.
 
 ## Handy deep links
-- `/#s3` — jump straight to any slide number (1–16)
+- `/#s3` — jump straight to any slide number (1–17)
 - `/#sim` — jump straight to the simulation
 
 Keyboard: ← / → arrows move between slides.
